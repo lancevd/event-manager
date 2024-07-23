@@ -5,7 +5,7 @@ const Header: React.FC = () => {
     <header className="bg-white border-gray-200 py-2.5 dark:bg-gray-800">
       <nav className="contain ">
         <div className="flex flex-wrap justify-between items-center ">
-          <a href="https://flowbite.com" className="flex items-center">
+          <a href="/" className="flex items-center">
             <span className="text-xl font-semibold whitespace-nowrap dark:text-white">
               Eventer
             </span>
