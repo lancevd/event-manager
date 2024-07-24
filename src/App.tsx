@@ -45,7 +45,7 @@ const App: React.FC = () => {
           })
         }
       </Routes>
-      
+      <Footer/>
     </BrowserRouter>
   );
 };
