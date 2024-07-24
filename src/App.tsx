@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   const menu = [
@@ -44,6 +45,7 @@ const App: React.FC = () => {
           })
         }
       </Routes>
+      
     </BrowserRouter>
   );
 };
