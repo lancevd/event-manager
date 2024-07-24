@@ -64,7 +64,7 @@ const Events: React.FC = () => {
 
   return (
     <section className="contain py-6 text-gray-600 body-font">
-      <div className="flex flex-col md:flex-row md:justify-between gap-4">
+      <div className="flex flex-col justify-center items-center md:flex-row md:justify-between gap-4 mb-8 md:mb-4">
         <h2 className="text-4xl font-bold text-gray-900 text-center mb-8">
           Upcoming Events
         </h2>
