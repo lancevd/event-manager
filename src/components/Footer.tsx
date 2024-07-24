@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-xl text-center">
         <a
           href="/"
-          className="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+          className="text-center text-2xl w-fit font-semibold text-gray-900 dark:text-white"
         >
           Eventer
         </a>
@@ -22,22 +22,7 @@ const Footer = () => {
           </li>
           <li>
             <a href="#" className="mr-4 hover:underline md:mr-6">
-              Premium
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6 ">
-              Campaigns
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
-              Affiliate Program
+              Company
             </a>
           </li>
           <li>
@@ -52,11 +37,7 @@ const Footer = () => {
           </li>
         </ul>
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          © 2024
-          <a href="/" className="hover:underline">
-            Eventer™
-          </a>
-          | All Rights Reserved.
+          © 2024 &nbsp;Eventer™&nbsp; | All Rights Reserved.
         </span>
       </div>
     </footer>

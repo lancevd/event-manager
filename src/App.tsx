@@ -32,6 +32,9 @@ const App: React.FC = () => {
       path: "dashboard",
       item: <Dashboard />,
     },
+    {
+      path: "events/*",
+    }
   ];
   return (
     <BrowserRouter>
