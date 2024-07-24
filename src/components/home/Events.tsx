@@ -23,7 +23,9 @@ const Events: React.FC = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}api/events`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}api/events`
+        );
         setEvents(response.data);
         // console.log(response);
       } catch (error) {
