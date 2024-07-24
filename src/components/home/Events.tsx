@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BsClock } from "react-icons/bs";
+import axios from "axios";
 
 interface Event {
-  id: number;
+  _id: string;
   name: string;
   date: string;
   time: string;
@@ -12,68 +13,30 @@ interface Event {
   image: string;
 }
 
-const events: Event[] = [
-  {
-    id: 1,
-    name: "Summer Fest",
-    description: "Lorem ipsum dolor sit amet consecteru elit adipiscing.",
-    date: "2024-08-15",
-    time: "10:00 AM",
-    location: "Stadium, Ibadan",
-    image:
-      "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    name: "Block Party Summer",
-    description:
-      "Lorem ipsum dolor sit amet consecteru elit adipiscing. Lorem ipsum dolor sit amet consecteru elit adipiscing.",
-    date: "2024-09-15",
-    time: "10:00 AM",
-    location: "Stadium, Ibadan",
-    image:
-      "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 3,
-    name: "Mid-Year Tech Conference",
-    description: "Lorem ipsum dolor sit amet consecteru elit adipiscing.",
-    date: "2024-08-23",
-    time: "10:00 AM",
-    location: "Stadium, Ibadan",
-    image:
-      "https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 4,
-    name: "Naija Chefs Meetup",
-    description: "Lorem ipsum dolor sit amet consecteru elit adipiscing.",
-    date: "2024-10-05",
-    time: "10:00 AM",
-    location: "Stadium, Ibadan",
-    image:
-      "https://images.unsplash.com/photo-1705917893274-ac6d684b0a01?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGNoZWZzfGVufDB8fDB8fHww",
-  },
-  {
-    id: 5,
-    name: "End of the Year Party",
-    description: "Lorem ipsum dolor sit amet consecteru elit adipiscing.",
-    date: "2024-08-15",
-    time: "10:00 AM",
-    location: "Stadium, Ibadan",
-    image:
-      "https://images.unsplash.com/photo-1438557068880-c5f474830377?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
-
 const Events: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [sortOrder, setSortOrder] = useState("name");
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}api/events`);
+        setEvents(response.data);
+        // console.log(response);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     filterAndSortEvents();
-  }, [searchQuery, sortOrder]);
+  }, [searchQuery, sortOrder, events]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -126,9 +89,9 @@ const Events: React.FC = () => {
       <div className="px-5 mx-auto">
         <div className="flex flex-wrap -m-4">
           {filteredEvents.map((event) => (
-            <div key={event.id} className="p-4 md:w-1/2 lg:w-1/3">
+            <div key={event._id} className="p-4 md:w-1/2 lg:w-1/3">
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                <Link to={"events/detail"}>
+                <Link to={`events/detail/${event._id}`}>
                   <img
                     className="lg:h-56 md:h-44 w-full object-cover object-center"
                     src={event.image}
@@ -145,7 +108,7 @@ const Events: React.FC = () => {
                   <p className="leading-relaxed mb-3">{event.description}</p>
                   <div className="flex items-center flex-wrap ">
                     <Link
-                      to={"events/detail"}
+                      to={`events/detail/${event._id}`}
                       className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
                     >
                       View Details
@@ -166,7 +129,6 @@ const Events: React.FC = () => {
                       <BsClock /> &nbsp;
                       {event.time}
                     </span>
-
                   </div>
                 </div>
               </div>
