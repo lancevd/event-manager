@@ -5,6 +5,8 @@ import axios from "axios";
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [registerSuccess, setRegisterSuccess] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,12 +29,21 @@ const Register: React.FC = () => {
       );
 
       if (response.status === 201) {
-        alert("User registered successfully");
-        navigate("/login");
+        setRegisterSuccess(true);
+        setMessage("User registered successfully");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000); // Redirect after 2 seconds
       }
     } catch (err) {
       console.error(err);
-      alert("Error registering user");
+      if (axios.isAxiosError(err)) {
+        // Checking if the error is an AxiosError
+        setMessage(err.response?.data?.message || "Error registering user");
+      } else {
+        setMessage("An unexpected error occurred");
+      }
+      setRegisterSuccess(false);
     }
   };
 
@@ -44,6 +55,19 @@ const Register: React.FC = () => {
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            {message && (
+              <p
+                className={`p-1 text-white ${
+                  registerSuccess ? "bg-green-700" : "bg-red-600"
+                } text-center ${!registerSuccess ? "animate-pulse" : ""}`}
+                style={{
+                  animationIterationCount: 2,
+                  animationDuration: "0.3s",
+                }}
+              >
+                {message}
+              </p>
+            )}
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
