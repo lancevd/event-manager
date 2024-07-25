@@ -1,7 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
+const Login: React.FC = () => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const user = {
+      username,
+      password,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        user,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const { token, role } = response.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+        alert("Login successful");
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error logging in");
+    }
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -13,7 +50,7 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="username"
@@ -26,8 +63,10 @@ const Login = () => {
                   name="username"
                   id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="Enter your username"
                   required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div>
@@ -44,6 +83,8 @@ const Login = () => {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -54,7 +95,6 @@ const Login = () => {
                       aria-describedby="remember"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -80,7 +120,7 @@ const Login = () => {
                 Sign in
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?
+                Don’t have an account yet?&nbsp;
                 <Link
                   to="/register"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
