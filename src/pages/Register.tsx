@@ -17,7 +17,7 @@ const Register: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${process.env.REACT_APP_BASE_URL}api/auth/register`,
         user,
         {
           headers: {
