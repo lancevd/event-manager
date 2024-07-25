@@ -5,11 +5,12 @@ import axios from "axios";
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginSuccess, setLoginSuccess] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const user = {
       username,
       password,
@@ -30,12 +31,21 @@ const Login: React.FC = () => {
         const { token, role } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
-        alert("Login successful");
-        navigate("/dashboard");
+        setLoginSuccess(true);
+        setMessage("Login successful");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
       }
     } catch (err) {
       console.error(err);
-      alert("Error logging in");
+      if (axios.isAxiosError(err)) {
+        // Checking if the error is an AxiosError
+        setMessage(err.response?.data?.message || "Error logging in");
+      } else {
+        setMessage("An unexpected error occurred");
+      }
+      setLoginSuccess(false);
     }
   };
 
@@ -47,6 +57,15 @@ const Login: React.FC = () => {
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            {message && (
+              <p
+                className={`p-1 text-white ${
+                  loginSuccess ? "bg-green-700" : "bg-red-600"
+                } text-center ${!loginSuccess ? "animate-pulse": ""}`} style={{animationIterationCount: 2, animationDuration:"0.3s",}}
+              >
+                {message}
+              </p>
+            )}
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
@@ -108,7 +127,7 @@ const Login: React.FC = () => {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="text-sm font-medium  hover:underline dark:text-gray-300"
                 >
                   Forgot password?
                 </a>
