@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App: React.FC = () => {
   const menu = [
@@ -29,10 +30,6 @@ const App: React.FC = () => {
       item: <Register />,
     },
     {
-      path: "dashboard",
-      item: <Dashboard />,
-    },
-    {
       path: "events/*",
     }
   ];
@@ -41,14 +38,14 @@ const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/company" element={<Company />} />
-        {
-          menu.map((item: any, index: number)=>{
-            return <Route key={index} path={item.path} element={item.item} />
-          })
-        }
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+        {menu.map((item: any, index: number) => {
+          return <Route key={index} path={item.path} element={item.item} />;
+        })}
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 };
