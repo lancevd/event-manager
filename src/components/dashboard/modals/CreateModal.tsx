@@ -18,6 +18,13 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   const [message, setMessage] = useState<string>("");
   const [success, setSuccess] = useState<boolean | null>(null);
 
+  // Calculate tomorrow's date
+  const getTomorrowDate = (): string => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    return today.toISOString().split("T")[0];
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -74,12 +81,12 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-gray-950 bg-opacity-50">
-      <div className=" w-[90%] h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 pb-4 px-4 sm:px-8 rounded transition-all">
+      <div className="w-[90%] h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 pb-4 px-4 sm:px-8 rounded transition-all">
         <div className="flex mb-4 border-b justify-between border-gray-500 items-center">
           <h2 className="text-xl text-center">Create Event</h2>
           <div
             onClick={onClose}
-            className="p-1 hover:bg-red-600 rounded hover:text-white cursor-pointer "
+            className="p-1 hover:bg-red-600 rounded hover:text-white cursor-pointer"
           >
             <TbX className="text-2xl" />
           </div>
@@ -135,6 +142,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
                 id="date"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 required
+                min={getTomorrowDate()}
                 value={eventData.date}
                 onChange={handleChange}
               />

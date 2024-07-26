@@ -33,7 +33,7 @@ const SingleEvent: React.FC = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}api/events/${id}`
+          `${process.env.REACT_APP_BASE_URL}api/events/details/${id}`
         );
         // console.log(response);
         setEvent(response.data);

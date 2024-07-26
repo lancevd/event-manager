@@ -24,7 +24,7 @@ const EventTable: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [events, setEvents] = useState<Event[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [refresh, setRefresh] = useState<boolean>(false); // New state to trigger refresh
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   const handleCreateClick = () => setShowCreateModal(true);
   const handleViewClick = (event: Event) => {
