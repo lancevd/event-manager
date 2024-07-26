@@ -64,7 +64,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
       }
     } catch (error) {
       console.error(error);
-      setMessage("Error creating event");
+      setMessage("Error creating event! Your session might have expired. Try to login again");
       setSuccess(false);
     }
   };

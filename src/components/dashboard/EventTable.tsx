@@ -33,6 +33,7 @@ const EventTable: React.FC = () => {
   };
   const handleEditClick = (event: Event) => {
     setSelectedEvent(event);
+    console.log(event);
     setShowEditModal(true);
   };
   const handleDeleteClick = (event: Event) => {
@@ -69,9 +70,22 @@ const EventTable: React.FC = () => {
     fetchEvents();
   }, [token, refresh]); // Dependency on token and refresh state
 
+  // Refresh events when user adds a new one
   const handleEventCreated = () => {
     setShowCreateModal(false);
-    setRefresh(!refresh); // Toggle refresh state to trigger useEffect
+    setRefresh(!refresh);
+  };
+
+  // Refresh events after updates
+  const handleEventUpdated = () => {
+    setShowEditModal(false);
+    setRefresh(!refresh);
+  };
+
+  // Refresh events after one is deleted
+  const handleEventDeleted = () => {
+    setShowDeleteModal(false);
+    setRefresh(!refresh);
   };
 
   return (
@@ -144,15 +158,12 @@ const EventTable: React.FC = () => {
         />
       )}
       {showEditModal && selectedEvent && (
-        <EditModal
-          event={selectedEvent}
-          onClose={() => setShowEditModal(false)}
-        />
+        <EditModal event={selectedEvent} onClose={handleEventUpdated} />
       )}
       {showDeleteModal && selectedEvent && (
         <DeleteModal
           event={selectedEvent}
-          onClose={() => setShowDeleteModal(false)}
+          onClose={handleEventDeleted}
         />
       )}
     </div>
