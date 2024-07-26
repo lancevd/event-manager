@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import SingleEvent from "./pages/SingleEvent";
 
 const AppContent: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -22,6 +23,7 @@ const AppContent: React.FC = () => {
       {!hideHeaderAndFooter && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/events/*" element ={<SingleEvent/>} />
         <Route path="/company" element={<Company />} />
         <Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/login" element={<Login />} />

@@ -95,56 +95,53 @@ const Events: React.FC = () => {
             </select>
           </div>
         </div>
-        {
-          loading ? (
-            <div className="flex justify-center">
-              <Spinner />
-            </div>
-          ) : (
-
-            <div className="px-5 mx-auto">
-              <div className="flex flex-wrap -m-4">
-                {filteredEvents.map((event) => (
-                  <div key={event._id} className="p-4 w-full sm:w-1/2 lg:w-1/3">
-                    <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                      <Link to={`events/detail/${event._id}`}>
-                        <img
-                          className="lg:h-56 md:h-44 w-full object-cover object-center"
-                          src={event.image}
-                          alt="event"
-                        />
-                      </Link>
-                      <div className="p-6">
-                        <p className="tracking-widest text-xs title-font font-medium text-gray-150 mb-1">
-                          {new Date(event.date).toLocaleDateString()}
-                        </p>
-                        <h3 className="title-font text-lg font-medium text-white mb-3">
-                          {event.name}
-                        </h3>
-                        <p className="leading-relaxed mb-3">
-                          {event.description.slice(0, 100)}
-                        </p>
-                        <div className="flex gap-4 items-center ">
-                          <Link
-                            to={`events/detail/${event._id}`}
-                            className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 focus:outline-none"
-                          >
-                            View Details
-                            <AiOutlineArrowRight />
-                          </Link>
-                          <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm py-1">
-                            <BsClock /> &nbsp;
-                            {event.time}
-                          </span>
-                        </div>
+        {loading ? (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        ) : (
+          <div className="px-5 mx-auto">
+            <div className="flex flex-wrap -m-4">
+              {filteredEvents.map((event) => (
+                <div key={event._id} className="p-4 w-full sm:w-1/2 lg:w-1/3">
+                  <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                    <Link to={`events/details?id=${event._id}`}>
+                      <img
+                        className="lg:h-56 md:h-44 w-full object-cover object-center"
+                        src={event.image}
+                        alt="event"
+                      />
+                    </Link>
+                    <div className="p-6">
+                      <p className="tracking-widest text-xs title-font font-medium text-gray-150 mb-1">
+                        {new Date(event.date).toLocaleDateString()}
+                      </p>
+                      <h3 className="title-font text-lg font-medium text-white mb-3">
+                        {event.name}
+                      </h3>
+                      <p className="leading-relaxed mb-3">
+                        {event.description.slice(0, 100)}
+                      </p>
+                      <div className="flex gap-4 items-center ">
+                        <Link
+                          to={`events/details?id=${event._id}`}
+                          className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 focus:outline-none"
+                        >
+                          View Details
+                          <AiOutlineArrowRight />
+                        </Link>
+                        <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm py-1">
+                          <BsClock /> &nbsp;
+                          {event.time}
+                        </span>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     </section>
   );
