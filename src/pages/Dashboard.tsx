@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 h-screen antialiased">
+    <div className="bg-gray-50 dark:bg-gray-900 h-screen overflow-y-auto antialiased">
       <DashboardNav onToggleSidebar={handleToggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} onClose={handleToggleSidebar} />
       <main className="p-4 md:ml-64 h-auto pt-20">
