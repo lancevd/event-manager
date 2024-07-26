@@ -33,7 +33,7 @@ const EventTable: React.FC = () => {
   };
   const handleEditClick = (event: Event) => {
     setSelectedEvent(event);
-    console.log(event);
+    // console.log(event);
     setShowEditModal(true);
   };
   const handleDeleteClick = (event: Event) => {
@@ -58,7 +58,7 @@ const EventTable: React.FC = () => {
 
         if (response.status === 200) {
           setEvents(response.data);
-          console.log(response);
+          // console.log(response);
         }
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -161,10 +161,7 @@ const EventTable: React.FC = () => {
         <EditModal event={selectedEvent} onClose={handleEventUpdated} />
       )}
       {showDeleteModal && selectedEvent && (
-        <DeleteModal
-          event={selectedEvent}
-          onClose={handleEventDeleted}
-        />
+        <DeleteModal event={selectedEvent} onClose={handleEventDeleted} />
       )}
     </div>
   );

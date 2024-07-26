@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { TbX } from "react-icons/tb";
+
 
 interface EditModalProps {
   event: any;
@@ -57,8 +59,16 @@ const EditModal: React.FC<EditModalProps> = ({ event, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-gray-950 bg-opacity-50">
-      <div className=" w-[90%] h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 py-4 px-4 sm:px-8 rounded transition-all">
-        <h2 className="text-xl text-center">Create Event</h2>
+      <div className=" w-[90%] h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 pb-4 px-4 sm:px-8 rounded transition-all">
+        <div className="flex mb-4 border-b justify-between border-gray-500 items-center">
+          <h2 className="text-xl text-center">Edit Event</h2>
+          <div
+            onClick={onClose}
+            className="p-1 hover:bg-red-600 rounded hover:text-white"
+          >
+            <TbX className="text-2xl" />
+          </div>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
