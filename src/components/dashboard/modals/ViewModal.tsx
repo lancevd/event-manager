@@ -21,7 +21,7 @@ const ViewModal: React.FC<ViewModalProps> = ({ event, onClose }) => {
           <h2 className="text-xl text-center">Event Details</h2>
           <div
             onClick={onClose}
-            className="p-1 hover:bg-red-600 rounded hover:text-white"
+            className="p-1 hover:bg-red-600 rounded hover:text-white cursor-pointer"
           >
             <TbX className="text-2xl" />
           </div>
@@ -33,6 +33,7 @@ const ViewModal: React.FC<ViewModalProps> = ({ event, onClose }) => {
               src={event.image}
               alt="event"
             />
+            <br />
             {event.name}
           </dt>
           <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">

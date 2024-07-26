@@ -79,7 +79,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
           <h2 className="text-xl text-center">Create Event</h2>
           <div
             onClick={onClose}
-            className="p-1 hover:bg-red-600 rounded hover:text-white"
+            className="p-1 hover:bg-red-600 rounded hover:text-white cursor-pointer "
           >
             <TbX className="text-2xl" />
           </div>

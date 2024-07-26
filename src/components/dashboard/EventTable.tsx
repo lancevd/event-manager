@@ -42,19 +42,22 @@ const EventTable: React.FC = () => {
   };
 
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}api/events/myevents`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const endpoint =
+          role === "admin"
+            ? `${process.env.REACT_APP_BASE_URL}api/events`
+            : `${process.env.REACT_APP_BASE_URL}api/events/myevents`;
+
+        const response = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (response.status === 200) {
           setEvents(response.data);
@@ -90,12 +93,15 @@ const EventTable: React.FC = () => {
 
   return (
     <div className="contain">
-      <button
-        onClick={handleCreateClick}
-        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm py-2 px-3 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white border"
-      >
-        Add Event
-      </button>
+      <div className="flex justify-between gap-4 text-gray-400 bg-transparent   rounded-lg text-sm py-2 px-3 ml-auto items-center dark:bg-gray-800 ">
+        <h3 className="text-xl">All Events</h3>
+        <button
+          onClick={handleCreateClick}
+          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none dark:focus:ring-primary-800"
+        >
+          Add Event
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full mt-4 bg-gray-800 text-gray-400 text-xs md:text-sm lg:text-base">
           <thead className="bg-gray-700 dark:text-gray-400">
