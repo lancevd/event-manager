@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 
-interface CreateModalProps {
+interface EditModalProps {
+  event: any;
   onClose: () => void;
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
-  const [eventData, setEventData] = useState({
-    name: "",
-    category: "",
-    location: "",
-    description: "",
-    date: "",
-    time: "",
-  });
+const EditModal: React.FC<EditModalProps> = ({ event, onClose }) => {
+  const [eventData, setEventData] = useState(event);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,7 +24,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white p-8 rounded shadow-lg">
-        <h2 className="text-xl mb-4">Create Event</h2>
+        <h2 className="text-xl mb-4">Edit Event</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2">Event Name</label>
@@ -101,7 +95,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Create
+            Save
           </button>
           <button
             onClick={onClose}
@@ -115,4 +109,4 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   );
 };
 
-export default CreateModal;
+export default EditModal;
