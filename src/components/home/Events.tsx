@@ -77,7 +77,7 @@ const Events: React.FC = () => {
           <h2 className="text-4xl font-bold text-white text-center mb-8">
             Upcoming Events
           </h2>
-          <div className="flex gap-4 items-center text-gray-200">
+          <div className="flex flex-col md:flex-row gap-4 items-center text-gray-200">
             <input
               type="text"
               placeholder="Search events..."
@@ -90,8 +90,8 @@ const Events: React.FC = () => {
               onChange={handleSortChange}
               className="border p-2 rounded-md dark:bg-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             >
-              <option value="name">Sort by Name</option>
               <option value="date">Sort by Date</option>
+              <option value="name">Sort by Name</option>
             </select>
           </div>
         </div>
@@ -105,7 +105,7 @@ const Events: React.FC = () => {
             <div className="px-5 mx-auto">
               <div className="flex flex-wrap -m-4">
                 {filteredEvents.map((event) => (
-                  <div key={event._id} className="p-4 md:w-1/2 lg:w-1/3">
+                  <div key={event._id} className="p-4 w-full sm:w-1/2 lg:w-1/3">
                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                       <Link to={`events/detail/${event._id}`}>
                         <img
@@ -124,15 +124,15 @@ const Events: React.FC = () => {
                         <p className="leading-relaxed mb-3">
                           {event.description.slice(0, 100)}
                         </p>
-                        <div className="flex items-center flex-wrap ">
+                        <div className="flex gap-4 items-center ">
                           <Link
                             to={`events/detail/${event._id}`}
-                            className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
+                            className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 focus:outline-none"
                           >
                             View Details
                             <AiOutlineArrowRight />
                           </Link>
-                          <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
+                          <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm py-1">
                             <BsClock /> &nbsp;
                             {event.time}
                           </span>
