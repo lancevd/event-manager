@@ -10,40 +10,23 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 const App: React.FC = () => {
-  const menu = [
-    {
-      path: "/",
-      item: <Home />,
-    },
-    {
-      path: "/company",
-      item: <Company />,
-    },
-    {
-      path: "/login",
-      item: <Login />,
-    },
-    {
-      path: "register",
-      item: <Register />,
-    },
-    {
-      path: "events/*",
-    }
-  ];
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/" element={<ProtectedRoute />}>
+        <Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-        {menu.map((item: any, index: number) => {
-          return <Route key={index} path={item.path} element={item.item} />;
-        })}
       </Routes>
       <Footer />
     </BrowserRouter>
