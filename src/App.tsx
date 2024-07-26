@@ -1,25 +1,28 @@
 // src/App.tsx
 import React from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Company from "./pages/Company";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
+  const location = useLocation();
+
+  const hideHeaderAndFooter = location.pathname.includes("/dashboard");
 
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {!hideHeaderAndFooter && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/company" element={<Company />} />
         <Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -28,7 +31,15 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
-      <Footer />
+      {!hideHeaderAndFooter && <Footer />}
+    </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 };
