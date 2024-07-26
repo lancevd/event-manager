@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BsClock } from "react-icons/bs";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import axios from "axios";
+import Spinner from "../Spinner";
 
 interface Event {
   _id: string;
@@ -19,18 +20,22 @@ const Events: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [sortOrder, setSortOrder] = useState("name");
+  const [loading, setLoading] = useState<boolean | null>(false);
 
   // Fetch data from API
   useEffect(() => {
     const fetchEvents = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}api/events`
         );
         setEvents(response.data);
+        setLoading(false);
         // console.log(response);
       } catch (error) {
         console.error("Error fetching events:", error);
+        setLoading(false);
       }
     };
 
@@ -90,47 +95,56 @@ const Events: React.FC = () => {
             </select>
           </div>
         </div>
-        <div className="px-5 mx-auto">
-          <div className="flex flex-wrap -m-4">
-            {filteredEvents.map((event) => (
-              <div key={event._id} className="p-4 md:w-1/2 lg:w-1/3">
-                <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <Link to={`events/detail/${event._id}`}>
-                    <img
-                      className="lg:h-56 md:h-44 w-full object-cover object-center"
-                      src={event.image}
-                      alt="event"
-                    />
-                  </Link>
-                  <div className="p-6">
-                    <p className="tracking-widest text-xs title-font font-medium text-gray-150 mb-1">
-                      {new Date(event.date).toLocaleDateString()}
-                    </p>
-                    <h3 className="title-font text-lg font-medium text-white mb-3">
-                      {event.name}
-                    </h3>
-                    <p className="leading-relaxed mb-3">
-                      {event.description.slice(0, 100)}
-                    </p>
-                    <div className="flex items-center flex-wrap ">
-                      <Link
-                        to={`events/detail/${event._id}`}
-                        className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
-                      >
-                        View Details
-                        <AiOutlineArrowRight />
+        {
+          loading ? (
+            <div className="flex justify-center">
+              <Spinner />
+            </div>
+          ) : (
+
+            <div className="px-5 mx-auto">
+              <div className="flex flex-wrap -m-4">
+                {filteredEvents.map((event) => (
+                  <div key={event._id} className="p-4 md:w-1/2 lg:w-1/3">
+                    <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                      <Link to={`events/detail/${event._id}`}>
+                        <img
+                          className="lg:h-56 md:h-44 w-full object-cover object-center"
+                          src={event.image}
+                          alt="event"
+                        />
                       </Link>
-                      <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
-                        <BsClock /> &nbsp;
-                        {event.time}
-                      </span>
+                      <div className="p-6">
+                        <p className="tracking-widest text-xs title-font font-medium text-gray-150 mb-1">
+                          {new Date(event.date).toLocaleDateString()}
+                        </p>
+                        <h3 className="title-font text-lg font-medium text-white mb-3">
+                          {event.name}
+                        </h3>
+                        <p className="leading-relaxed mb-3">
+                          {event.description.slice(0, 100)}
+                        </p>
+                        <div className="flex items-center flex-wrap ">
+                          <Link
+                            to={`events/detail/${event._id}`}
+                            className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
+                          >
+                            View Details
+                            <AiOutlineArrowRight />
+                          </Link>
+                          <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
+                            <BsClock /> &nbsp;
+                            {event.time}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          )
+        }
       </div>
     </section>
   );
