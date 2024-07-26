@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login: React.FC = () => {
@@ -7,7 +7,6 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [loginSuccess, setLoginSuccess] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string>("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +33,7 @@ const Login: React.FC = () => {
         setLoginSuccess(true);
         setMessage("Login successful");
         setTimeout(() => {
-          navigate("/dashboard");
+          window.location.href = "/dashboard";
         }, 2000);
       }
     } catch (err) {
@@ -61,7 +60,11 @@ const Login: React.FC = () => {
               <p
                 className={`p-1 text-white ${
                   loginSuccess ? "bg-green-700" : "bg-red-600"
-                } text-center ${!loginSuccess ? "animate-pulse": ""}`} style={{animationIterationCount: 2, animationDuration:"0.3s",}}
+                } text-center ${!loginSuccess ? "animate-pulse" : ""}`}
+                style={{
+                  animationIterationCount: 2,
+                  animationDuration: "0.3s",
+                }}
               >
                 {message}
               </p>
