@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BsClock } from "react-icons/bs";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import axios from "axios";
 
 interface Event {
@@ -108,27 +109,18 @@ const Events: React.FC = () => {
                     <h3 className="title-font text-lg font-medium text-white mb-3">
                       {event.name}
                     </h3>
-                    <p className="leading-relaxed mb-3">{event.description}</p>
+                    <p className="leading-relaxed mb-3">
+                      {event.description.slice(0, 100)}
+                    </p>
                     <div className="flex items-center flex-wrap ">
                       <Link
                         to={`events/detail/${event._id}`}
-                        className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
+                        className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
                       >
                         View Details
-                        <svg
-                          className="w-4 h-4 ml-2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M5 12h14"></path>
-                          <path d="M12 5l7 7-7 7"></path>
-                        </svg>
+                        <AiOutlineArrowRight />
                       </Link>
-                      <span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
+                      <span className="text-white font-medium mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
                         <BsClock /> &nbsp;
                         {event.time}
                       </span>
