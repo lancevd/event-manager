@@ -62,14 +62,13 @@ const Events: React.FC = () => {
       event.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    if (sortOrder === "name") {
-      filtered.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOrder === "date") {
+    if (sortOrder === "date") {
       filtered.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
+    } else if (sortOrder === "name") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
-
     setFilteredEvents(filtered);
   };
 
