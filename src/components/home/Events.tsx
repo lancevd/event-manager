@@ -30,9 +30,12 @@ const Events: React.FC = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}api/events`
         );
-        setEvents(response.data);
+        const upcomingEvents = response.data.filter((event: Event) => {
+          const eventDate = new Date(event.date);
+          return eventDate >= new Date(); // Filter out past events
+        });
+        setEvents(upcomingEvents);
         setLoading(false);
-        // console.log(response);
       } catch (error) {
         console.error("Error fetching events:", error);
         setLoading(false);
@@ -71,7 +74,7 @@ const Events: React.FC = () => {
   };
 
   return (
-    <section className=" py-6 dark:bg-gray-700 text-gray-300 ">
+    <section className="py-6 dark:bg-gray-700 text-gray-300">
       <div className="contain">
         <div className="flex flex-col justify-center items-center md:flex-row md:justify-between gap-4 mb-8 md:mb-4">
           <h2 className="text-4xl font-bold text-white text-center mb-8">
@@ -122,10 +125,10 @@ const Events: React.FC = () => {
                       <p className="leading-relaxed mb-3">
                         {event.description.slice(0, 100)}
                       </p>
-                      <div className="flex gap-4 items-center ">
+                      <div className="flex gap-4 items-center">
                         <Link
                           to={`events/details?id=${event._id}`}
-                          className=" flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 focus:outline-none"
+                          className="flex gap-3 items-center bg-[#2563EB] hover:bg-[#1D4ED8] text-white focus:ring-4 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 focus:outline-none"
                         >
                           View Details
                           <AiOutlineArrowRight />
