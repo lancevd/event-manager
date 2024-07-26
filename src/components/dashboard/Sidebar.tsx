@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { MdEventNote, MdLogout, MdSupervisedUserCircle } from "react-icons/md";
-import { useNavigate } from "react-router";
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  const navigate = useNavigate();
   useEffect(() => {
-    const role: string | null = localStorage.getItem("role");
-    if(role === "admin"){
+    const role = localStorage.getItem("role");
+    if (role === "admin") {
       setIsAdmin(true);
     }
   }, []);
+
   const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
-    window.location.href="/login"
+    window.location.href = "/login";
   };
+
   return (
     <aside
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
       aria-label="Sidenav"
     >
       <div className="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
@@ -34,7 +41,7 @@ const Sidebar: React.FC = () => {
               <span className="ml-3">Events</span>
             </a>
           </li>
-          <li className={`${isAdmin ? "block":"hidden"}`}>
+          <li className={`${isAdmin ? "block" : "hidden"}`}>
             <a
               href="#"
               className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
@@ -45,14 +52,14 @@ const Sidebar: React.FC = () => {
           </li>
         </ul>
       </div>
-      <div className="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20">
+      <div className="absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full md:flex bg-white dark:bg-gray-800 z-20">
         <button
           onClick={logOut}
           className="bg-red-500 w-full rounded-lg flex gap-4 justify-center items-center text-gray-100 py-1"
         >
-          Logout{" "}
+          Logout
           <span>
-            <MdLogout />{" "}
+            <MdLogout />
           </span>
         </button>
       </div>
