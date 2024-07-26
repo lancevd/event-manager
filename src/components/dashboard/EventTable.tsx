@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateModal from "./modals/CreateModal";
 import ViewModal from "./modals/ViewModal";
 import EditModal from "./modals/EditModal";
 import DeleteModal from "./modals/DeleteModal";
+import axios from "axios";
+
+
+interface Event {
+  _id: string;
+  name: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  image: string;
+}
 
 const EventTable: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -10,6 +22,8 @@ const EventTable: React.FC = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [events, setEvents] = useState<Event[] | null>(null);
+  const [loading, setLoading] = useState<boolean | null>(false)
 
   const handleCreateClick = () => setShowCreateModal(true);
   const handleViewClick = (event: any) => {
@@ -25,26 +39,55 @@ const EventTable: React.FC = () => {
     setShowDeleteModal(true);
   };
 
-  const events = [
-    {
-      id: 1,
-      name: "Event 1",
-      category: "Conference",
-      location: "New York",
-      description: "This is event 1",
-      date: "2024-08-01",
-      time: "10:00 AM",
-    },
-    {
-      id: 2,
-      name: "Event 2",
-      category: "Workshop",
-      location: "San Francisco",
-      description: "This is event 2",
-      date: "2024-09-15",
-      time: "2:00 PM",
-    },
-  ];
+  // const events = [
+  //   {
+  //     id: 1,
+  //     name: "Event 1",
+  //     category: "Conference",
+  //     location: "New York",
+  //     description: "This is event 1",
+  //     date: "2024-08-01",
+  //     time: "10:00 AM",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Event 2",
+  //     category: "Workshop",
+  //     location: "San Francisco",
+  //     description: "This is event 2",
+  //     date: "2024-09-15",
+  //     time: "2:00 PM",
+  //   },
+  // ];
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}api/events/myevents`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status ===200) {
+          setEvents(response.data);
+          console.log(response);
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   return (
     <div className="contain ">
@@ -59,7 +102,6 @@ const EventTable: React.FC = () => {
           <thead className="bg-gray-700 dark:text-gray-400">
             <tr>
               <th className="p-2">Event Name</th>
-              <th className="p-2">Category</th>
               <th className="p-2">Location</th>
               <th className="p-2">Description</th>
               <th className="p-2">Date</th>
@@ -68,12 +110,11 @@ const EventTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {events.map((event, index) => (
+            {!events ? "Loading..." : events.map((event, index) => (
               <tr key={index} className="border-b border-gray-600 py-1">
                 <td className="py-2 pl-3">{event.name}</td>
-                <td className="p-2">{event.category}</td>
                 <td className="p-2">{event.location}</td>
-                <td className="p-2">{event.description}</td>
+                <td className="p-2">{event.description.slice(0,20)}</td>
                 <td className="p-2">{event.date}</td>
                 <td className="p-2">{event.time}</td>
                 <td className="p-2 flex flex-col lg:flex-row gap-1">
