@@ -4,7 +4,8 @@ This project was created with React and the backend with Node.js/Express.js.
 
 ## About Eventer
 
-You can run the demo of the app using this [Live link](https://eventer-2024.vercel.app/).
+You can run the demo of the app using this [Live link](https://eventer-2024.vercel.app/).\
+Check out the link to the [backend repository here](https://github.com/lancevd/Eventer-backend)
 
 On this app here are the things you can do:\
 * View all upcoming events
