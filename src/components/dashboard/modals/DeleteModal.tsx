@@ -38,7 +38,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ event, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-gray-950 bg-opacity-50">
-      <div className=" w-[90%] h-[80vh] lg:max-h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 pb-4 px-4 sm:px-8 rounded transition-all">
+      <div className=" w-[90%] lg:max-h-[80vh] overflow-y-auto md:h-fit lg:w-3/5 text-gray-400 bg-gray-800 pb-4 px-4 sm:px-8 rounded transition-all">
         <div className="flex flex-col gap-4 items-center">
           <h2 className="text-xl mb-4">Delete Event</h2>
           <p>Are you sure you want to delete this event?</p>

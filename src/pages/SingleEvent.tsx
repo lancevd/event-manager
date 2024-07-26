@@ -83,7 +83,7 @@ const SingleEvent: React.FC = () => {
                 alt="event"
               />
               <br />
-              <p className="text-lg">{event.description}</p>
+              <p className="">{event.description}</p>
             </div>
             <div className="w-full lg:w-2/5">
               <h2 className="text-2xl font-bold mb-4">{event.name}</h2>
