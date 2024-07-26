@@ -18,13 +18,14 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   const [message, setMessage] = useState<string>("");
   const [success, setSuccess] = useState<boolean | null>(null);
 
-  // Calculate tomorrow's date
+  // Calculate tomorrow's date. The idea is that users should not be able to select past dates or today's date. So they can start setting event from tomorrow's date.
   const getTomorrowDate = (): string => {
     const today = new Date();
     today.setDate(today.getDate() + 1);
     return today.toISOString().split("T")[0];
   };
 
+  // handle change in input values
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -32,6 +33,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
     setEventData({ ...eventData, [name]: value });
   };
 
+  // handle change in file upload
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImage(e.target.files[0]);

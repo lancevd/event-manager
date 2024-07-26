@@ -7,6 +7,7 @@ interface ViewModalProps {
 }
 
 const ViewModal: React.FC<ViewModalProps> = ({ event, onClose }) => {
+  // For better user experience, I decide to convert the date to this format 26 June 2024
   const inputDate = new Date(event.date);
   const formattedDate = inputDate.toLocaleDateString("en-US", {
     year: "numeric",

@@ -34,6 +34,7 @@ const DashboardNav: React.FC<DashboardNavProps> = ({ onToggleSidebar }) => {
             <span className="sr-only">Open user menu</span>
             <img
               className="w-8 h-8 rounded-full"
+              // A default user avatar
               src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?w=740&t=st=1721998818~exp=1721999418~hmac=05bd7ba64e59402ca4d58a253e6c1f92faae0b47d56d7f6986122692ef675b28"
               alt="user photo"
             />

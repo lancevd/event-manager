@@ -15,6 +15,7 @@ const AppContent: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
   const location = useLocation();
 
+  // Exclude header and footer from the Dashboard
   const hideHeaderAndFooter = location.pathname.includes("/dashboard");
 
   return (

@@ -33,7 +33,7 @@ const Register: React.FC = () => {
         setMessage("User registered successfully");
         setTimeout(() => {
           navigate("/login");
-        }, 2000); // Redirect after 2 seconds
+        }, 2000); 
       }
     } catch (err) {
       console.error(err);

@@ -57,6 +57,7 @@ const SingleEvent: React.FC = () => {
     );
   }
 
+  // For better user experience, I formatted the date to show the full month and year
   const inputDate = new Date(event?.date);
   const formattedDate = inputDate.toLocaleDateString("en-US", {
     year: "numeric",

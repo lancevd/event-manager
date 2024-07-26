@@ -57,6 +57,7 @@ const Events: React.FC = () => {
     setSortOrder(e.target.value);
   };
 
+  // Function for filtering events by name or date
   const filterAndSortEvents = () => {
     let filtered = events.filter((event) =>
       event.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -79,6 +80,7 @@ const Events: React.FC = () => {
           <h2 className="text-4xl font-bold text-white text-center mb-8">
             Upcoming Events
           </h2>
+          {/* Search abd filter */}
           <div className="flex flex-col md:flex-row gap-4 items-center text-gray-200">
             <input
               type="text"

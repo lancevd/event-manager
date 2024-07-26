@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { TbX } from "react-icons/tb";
 
-
 interface EditModalProps {
   event: any;
   onClose: () => void;
@@ -10,9 +9,10 @@ interface EditModalProps {
 
 const EditModal: React.FC<EditModalProps> = ({ event, onClose }) => {
   const [eventData, setEventData] = useState(event);
-   const [message, setMessage] = useState<string>("");
-   const [success, setSuccess] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string>("");
+  const [success, setSuccess] = useState<boolean | null>(null);
 
+  //  handle change in input values
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

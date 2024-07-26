@@ -26,16 +26,24 @@ const EventTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
 
+  // When user clicks on the create button, it should show the modal
   const handleCreateClick = () => setShowCreateModal(true);
+
+  // When user clicks on the view button, it should show the modal and pass the selected event as a prop to the modal
   const handleViewClick = (event: Event) => {
     setSelectedEvent(event);
     setShowViewModal(true);
   };
+
+  // When user clicks on the edit button, it should show the edit modal and pass the selected event as a prop to the modal
+
   const handleEditClick = (event: Event) => {
     setSelectedEvent(event);
     // console.log(event);
     setShowEditModal(true);
   };
+  // When user clicks on the delete button, it should show the delete modal and pass the selected event as a prop to the modal
+
   const handleDeleteClick = (event: Event) => {
     setSelectedEvent(event);
     setShowDeleteModal(true);
@@ -48,6 +56,7 @@ const EventTable: React.FC = () => {
     const fetchEvents = async () => {
       setLoading(true);
       try {
+        // Admin can see all the events but a user can only see the events they created. The path has been configured from the backend. 
         const endpoint =
           role === "admin"
             ? `${process.env.REACT_APP_BASE_URL}api/events`
