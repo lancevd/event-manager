@@ -42,7 +42,7 @@ const EditModal: React.FC<EditModalProps> = ({ event, onClose }) => {
           },
         }
       );
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         setMessage("Event Updated successfully");
         setSuccess(true);
