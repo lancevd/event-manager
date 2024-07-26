@@ -27,9 +27,11 @@ const Login: React.FC = () => {
       );
 
       if (response.status === 200) {
-        const { token, role } = response.data;
+        console.log(response.data)
+        const { token, role,userId } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
+        localStorage.setItem("userId",userId);
         setLoginSuccess(true);
         setMessage("Login successful");
         setTimeout(() => {
