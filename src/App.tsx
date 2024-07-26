@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Company from "./pages/Company";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -23,8 +22,7 @@ const AppContent: React.FC = () => {
       {!hideHeaderAndFooter && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/events/*" element ={<SingleEvent/>} />
-        <Route path="/company" element={<Company />} />
+        <Route path="/events/*" element={<SingleEvent />} />
         <Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
