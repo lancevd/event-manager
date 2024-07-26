@@ -4,6 +4,7 @@ import { MdOutlineCalendarToday } from "react-icons/md";
 import { HiOutlineClock } from "react-icons/hi2";
 import { IoLocationOutline } from "react-icons/io5";
 import axios from "axios";
+import Countdown from "../components/home/Countdown";
 
 interface EventDetails {
   _id: string;
@@ -68,6 +69,7 @@ const SingleEvent: React.FC = () => {
               src={event.image}
               alt="event"
             />
+            <br />
             <p className="text-lg">{event.description}</p>
           </div>
           <div className="w-full lg:w-2/5">
@@ -105,16 +107,9 @@ const SingleEvent: React.FC = () => {
               </span>
               {event.location}
             </p>
-            <p className="flex items-center gap-3 text-sm mb-3"></p>
-            <div className="w-full border bg-gray-500 rounded-lg text-center opacity-50">
-              <p className="countdown p-4 text-white text-4xl">
-                <span className="mx-1">00</span>:
-                <span className="mx-1">00</span>:
-                <span className="mx-1">00</span>
-              </p>
-            </div>
-            <br />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            <p className="my-4">Countdown to event</p>
+            <Countdown eventDate={event.date} /> <br />
+            <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Register Now
             </button>
           </div>
